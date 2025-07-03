@@ -9,3 +9,23 @@ mupdf_version <- function() {
     .Call(`_RMuPdf_mupdf_version`)
 }
 
+pdf_page_image_xrefs <- function(doc_xptr, page_num) {
+    .Call(`_RMuPdf_pdf_page_image_xrefs`, doc_xptr, page_num)
+}
+
+pdf_save_image <- function(doc_xptr, xref, path) {
+    invisible(.Call(`_RMuPdf_pdf_save_image`, doc_xptr, xref, path))
+}
+
+pdf_render_page <- function(doc_xptr, page_num, path, dpi = 150L) {
+    invisible(.Call(`_RMuPdf_pdf_render_page`, doc_xptr, page_num, path, dpi))
+}
+
+pdf_page_count <- function(doc_xptr) {
+    .Call(`_RMuPdf_pdf_page_count`, doc_xptr)
+}
+
+pdf_extract_text <- function(doc_xptr) {
+    .Call(`_RMuPdf_pdf_extract_text`, doc_xptr)
+}
+

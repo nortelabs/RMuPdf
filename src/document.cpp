@@ -1,18 +1,4 @@
-#include <Rcpp.h>
-#include <mupdf/fitz.h>
-
-struct MuPDFDoc {
-    fz_context *ctx{nullptr};
-    fz_document *doc{nullptr};
-    ~MuPDFDoc() {
-        if (ctx && doc) {
-            fz_drop_document(ctx, doc);
-        }
-        if (ctx) {
-            fz_drop_context(ctx);
-        }
-    }
-};
+#include "utils.h"
 
 // [[Rcpp::export]]
 SEXP pdf_open(std::string path) {

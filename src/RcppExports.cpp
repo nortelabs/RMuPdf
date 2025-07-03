@@ -31,10 +31,74 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pdf_page_image_xrefs
+Rcpp::IntegerVector pdf_page_image_xrefs(SEXP doc_xptr, int page_num);
+RcppExport SEXP _RMuPdf_pdf_page_image_xrefs(SEXP doc_xptrSEXP, SEXP page_numSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type doc_xptr(doc_xptrSEXP);
+    Rcpp::traits::input_parameter< int >::type page_num(page_numSEXP);
+    rcpp_result_gen = Rcpp::wrap(pdf_page_image_xrefs(doc_xptr, page_num));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pdf_save_image
+void pdf_save_image(SEXP doc_xptr, int xref, std::string path);
+RcppExport SEXP _RMuPdf_pdf_save_image(SEXP doc_xptrSEXP, SEXP xrefSEXP, SEXP pathSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type doc_xptr(doc_xptrSEXP);
+    Rcpp::traits::input_parameter< int >::type xref(xrefSEXP);
+    Rcpp::traits::input_parameter< std::string >::type path(pathSEXP);
+    pdf_save_image(doc_xptr, xref, path);
+    return R_NilValue;
+END_RCPP
+}
+// pdf_render_page
+void pdf_render_page(SEXP doc_xptr, int page_num, std::string path, int dpi);
+RcppExport SEXP _RMuPdf_pdf_render_page(SEXP doc_xptrSEXP, SEXP page_numSEXP, SEXP pathSEXP, SEXP dpiSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type doc_xptr(doc_xptrSEXP);
+    Rcpp::traits::input_parameter< int >::type page_num(page_numSEXP);
+    Rcpp::traits::input_parameter< std::string >::type path(pathSEXP);
+    Rcpp::traits::input_parameter< int >::type dpi(dpiSEXP);
+    pdf_render_page(doc_xptr, page_num, path, dpi);
+    return R_NilValue;
+END_RCPP
+}
+// pdf_page_count
+int pdf_page_count(SEXP doc_xptr);
+RcppExport SEXP _RMuPdf_pdf_page_count(SEXP doc_xptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type doc_xptr(doc_xptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(pdf_page_count(doc_xptr));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pdf_extract_text
+Rcpp::CharacterVector pdf_extract_text(SEXP doc_xptr);
+RcppExport SEXP _RMuPdf_pdf_extract_text(SEXP doc_xptrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type doc_xptr(doc_xptrSEXP);
+    rcpp_result_gen = Rcpp::wrap(pdf_extract_text(doc_xptr));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_RMuPdf_pdf_open", (DL_FUNC) &_RMuPdf_pdf_open, 1},
     {"_RMuPdf_mupdf_version", (DL_FUNC) &_RMuPdf_mupdf_version, 0},
+    {"_RMuPdf_pdf_page_image_xrefs", (DL_FUNC) &_RMuPdf_pdf_page_image_xrefs, 2},
+    {"_RMuPdf_pdf_save_image", (DL_FUNC) &_RMuPdf_pdf_save_image, 3},
+    {"_RMuPdf_pdf_render_page", (DL_FUNC) &_RMuPdf_pdf_render_page, 4},
+    {"_RMuPdf_pdf_page_count", (DL_FUNC) &_RMuPdf_pdf_page_count, 1},
+    {"_RMuPdf_pdf_extract_text", (DL_FUNC) &_RMuPdf_pdf_extract_text, 1},
     {NULL, NULL, 0}
 };
 
