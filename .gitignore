@@ -1,1 +1,29 @@
-.Rproj.user
+# R and RStudio
+.Rproj.user/
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+
+# Build and check output
+.Rcheck/
+.DS_Store
+
+# Compiled objects
+src/*.o
+src/*.so
+src/*.dll
+src/*.dylib
+src/*/*.o
+src/*/*.so
+src/*/*.dll
+
+# Package tarballs
+*.tar.gz
+
+# Generated documentation
+*.pdf
+*.html
+
+# Others
+.Rbuildignore

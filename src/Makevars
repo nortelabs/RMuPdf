@@ -1,0 +1,2 @@
+PKG_CPPFLAGS += -I$(shell brew --prefix)/include/mupdf
+PKG_LIBS     += -L$(shell brew --prefix)/lib -lmupdf -lmupdf-third
