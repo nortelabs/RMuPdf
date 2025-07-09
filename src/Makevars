@@ -1,2 +1,8 @@
-PKG_CPPFLAGS += -I$(shell brew --prefix)/include/mupdf
-PKG_LIBS     += -L$(shell brew --prefix)/lib -lmupdf -lmupdf-third
+# CRAN-compliant Makevars: avoid GNU extensions
+# Default: MuPDF installed in /usr/local (edit if needed)
+PKG_CPPFLAGS = -I/usr/local/include/mupdf
+PKG_LIBS = -L/usr/local/lib -lmupdf -lmupdf-third
+
+# If you use Homebrew on Apple Silicon (M1/M2), edit as follows:
+# PKG_CPPFLAGS = -I/opt/homebrew/include/mupdf
+# PKG_LIBS = -L/opt/homebrew/lib -lmupdf -lmupdf-third
