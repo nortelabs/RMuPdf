@@ -1,8 +1,32 @@
-# CRAN-compliant Makevars: avoid GNU extensions
-# Default: MuPDF installed in /usr/local (edit if needed)
-PKG_CPPFLAGS = -I/usr/local/include/mupdf
-PKG_LIBS = -L/usr/local/lib -lmupdf -lmupdf-third
+## -------- Makevars for bundled MuPDF (Unix/macOS) -------------------
+## 1. Layout: we assume MuPDF sources are in src/mupdf/source and
+##    headers in src/mupdf/include .
+## 2. We compile all MuPDF *.c files into a static library (libmupdf.a)
+##    that is then linked with the package's own C/C++ code.
+## -------------------------------------------------------------------
 
-# If you use Homebrew on Apple Silicon (M1/M2), edit as follows:
-# PKG_CPPFLAGS = -I/opt/homebrew/include/mupdf
-# PKG_LIBS = -L/opt/homebrew/lib -lmupdf -lmupdf-third
+# Path variables (relative to this Makevars file which lives in src/)
+MUPDF_DIR       := mupdf
+MUPDF_SRC_DIR   := $(MUPDF_DIR)/source
+MUPDF_INC_DIR   := $(MUPDF_DIR)/include
+
+# Collect all C source files from MuPDF (recursive)
+MUPDF_CSRC      := $(shell find $(MUPDF_SRC_DIR) -name '*.c' \
+                       \! -path '*/tools/*' \! -path '*/tests/*' \! -path '*/html/*')
+MUPDF_OBJ       := $(MUPDF_CSRC:.c=.o)
+
+# Build static library from MuPDF object files
+libmupdf.a: $(MUPDF_OBJ)
+	$(AR) rcs $@ $^
+
+# Ensure MuPDF library is built before compiling package objects
+$(OBJECTS): libmupdf.a
+
+# Compiler and linker flags for the package
+PKG_CPPFLAGS   = -I$(MUPDF_INC_DIR) -I/opt/homebrew/include/freetype2 -I/opt/homebrew/include/openjpeg-2.5
+# Minimal libs; extend if your MuPDF build needs more (jpeg, openjpeg, freetype ...)
+PKG_LIBS       = libmupdf.a -lm -lz -lopenjp2
+
+# Phony target to clean MuPDF objects too
+distclean: clean
+	$(RM) $(MUPDF_OBJ) libmupdf.a

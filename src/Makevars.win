@@ -1,0 +1,26 @@
+## -------- Makevars.win for bundled MuPDF (Windows) ------------------
+## Assumes MuPDF sources in src\mupdf\source and headers in
+## src\mupdf\include . Adjust paths if needed.
+## -------------------------------------------------------------------
+
+MUPDF_DIR      = mupdf
+MUPDF_SRC_DIR  = $(MUPDF_DIR)\source
+MUPDF_INC_DIR  = $(MUPDF_DIR)\include
+
+# Collect C sources recursively (Windows shell lacks 'find', use wildcard)
+MUPDF_CSRC = $(wildcard $(MUPDF_SRC_DIR)/*.c) $(wildcard $(MUPDF_SRC_DIR)/*/*.c)
+MUPDF_OBJ  = $(MUPDF_CSRC:.c=.o)
+
+# Build static library (rlibtool.a is Rtools wrapper for ar on Windows)
+libmupdf.a: $(MUPDF_OBJ)
+	$(AR) rcs $@ $^
+
+# Build order
+$(OBJECTS): libmupdf.a
+
+PKG_CPPFLAGS = -I"$(MUPDF_INC_DIR)"
+# Extend library list if needed (jpeg, openjp2, freetype, ...)
+PKG_LIBS    = libmupdf.a -lz -lws2_32 -luser32 -lgdi32 -static-libgcc
+
+clean:
+	$(RM) $(MUPDF_OBJ) libmupdf.a
